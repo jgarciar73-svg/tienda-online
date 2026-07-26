@@ -1,0 +1,16 @@
+/* Estilos adicionales - Mi Tienda Online */
+
+.carousel-img {
+  height: 350px;
+  object-fit: cover;
+}
+
+.card img {
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-text {
+  font-weight: bold;
+  color: #198754;
+}
