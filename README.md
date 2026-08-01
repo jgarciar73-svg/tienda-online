@@ -1,69 +1,87 @@
-# Mi Tienda Online — Maquetación de Página Principal
+# Mi Tienda Online — Carga dinámica de productos con Fetch API
 
 **Nombre:** [Joshua eduardo Garcia Reyes]
 **Carné:** [1890-22-5831]
 
 ## Descripción del proyecto
 
-Maquetación visual (sin funcionalidad) de la página principal de una tienda
-online, desarrollada con **Bootstrap 5.3** como parte de la tarea de diseño
-de interfaces. El proyecto se centra únicamente en la estructura, el diseño
-y la responsividad de la página; no incluye lógica de programación (el
-carrito de compras y los botones son solo visuales, usando el atributo
-`disabled`).
+Ampliación de la maquetación de la tienda online (Bootstrap 5.3): los
+productos ya **no están escritos directamente en el HTML**, sino que se
+obtienen desde un servicio web (API REST) y se renderizan dinámicamente
+con JavaScript.
+
+**API utilizada:**
+`https://backservicetest-g8emcvdff0fqe2b8.canadacentral-01.azurewebsites.net/api/producto`
+
+## Funcionalidad nueva (esta semana)
+
+- **Conexión al backend** con `fetch()` usando `async/await` y manejo de
+  errores con `try/catch` (si la API falla se muestra una alerta
+  `alert-danger` en lugar de los productos).
+- **Renderizado dinámico:** los productos se recorren con `.forEach()` y por
+  cada uno se genera su card, insertándola con `appendChild()` dentro de
+  `<div class="row" id="contenedor-productos">`, ubicado en la columna
+  derecha del layout principal.
+- Cada producto muestra: **imagen, nombre, descripción, precio** y el botón
+  **"Agregar al carrito"**.
+- Si el producto tiene `enOferta == true`, se muestra el `precioOferta` en
+  rojo y el precio original tachado, ambos formateados con
+  `parseFloat(...).toFixed(2)`.
+- **Carrito funcional (contador):** el botón "Agregar al carrito" incrementa
+  el badge del carrito en la navbar (`#contadorCarrito`).
+- **Diseño responsivo:** cada producto va dentro de un
+  `div.col-sm-12.col-md-4.mb-4` → 1 producto por fila en pantallas pequeñas
+  y 3 por fila en medianas/grandes, usando Bootstrap Cards (`row`, `card`,
+  `card-body`, `img-fluid`, `btn`).
 
 ## Componentes de Bootstrap utilizados
 
 - **Navbar** (`navbar`, `navbar-expand-lg`, `navbar-dark`, `bg-dark`) con
   marca, menú de navegación e ícono de carrito de compras con contador
-  (badge) simulado, siguiendo el ejemplo oficial de Bootstrap para badges
-  posicionados (`position-absolute`, `translate-middle`).
+  (badge) posicionado (`position-absolute`, `translate-middle`).
 - **Carousel** (`carousel`, `carousel-inner`, `carousel-indicators`,
   `carousel-caption`) como encabezado principal con 3 diapositivas.
-- **Grid system** (`container`, `row`, `col-sm-3`, `col-sm-9`, `col-12`,
+- **Grid system** (`container`, `row`, `col-sm-3`, `col-sm-9`, `col-sm-12`,
   `col-md-4`) para la distribución general de la página y de los productos.
 - **Cards** (`card`, `card-img-top`, `card-body`, `card-title`) para mostrar
-  cada uno de los 6 productos.
+  cada producto obtenido de la API.
 - **List group** (`list-group`, `list-group-item`, `list-group-item-action`)
   para el menú lateral de categorías.
 - **Buttons** (`btn btn-primary`, `btn-outline-light`) para el botón
   "Agregar al carrito" y el ícono del carrito.
+- **Spinner** (`spinner-border`) como indicador de carga mientras se
+  consulta la API.
 - **Bootstrap Icons** para el ícono del carrito (`bi-cart3`).
-- CSS propio muy sencillo (`css/styles.css`), solo con algunos ajustes de
-  tamaño de imágenes; el resto del estilo usa las clases y colores por
-  defecto de Bootstrap.
-
-## Diseño responsivo
-
-- **Pantallas pequeñas (celulares):** los productos se muestran uno por fila
-  al 100% del ancho (`col-12`).
-- **Pantallas medianas o grandes:** los productos se muestran tres por fila
-  (`col-md-4`).
-- El menú lateral de categorías usa `col-sm-3` y el área de productos usa
-  `col-sm-9`, apilándose verticalmente en pantallas muy pequeñas y
-  mostrándose en columnas horizontales a partir del breakpoint `sm`.
+- CSS propio muy sencillo (`styles.css`), solo con algunos ajustes de
+  tamaño de imágenes.
 
 ## Estructura del repositorio
 
 ```
-├── index.html          → Página principal de la tienda
-├── css/
-│   └── styles.css      → Estilos adicionales sobre Bootstrap
-└── README.md            → Este archivo
+├── index.html          → Página principal (incluye el script de Fetch API)
+├── styles.css          → Estilos adicionales sobre Bootstrap
+├── *.jpg.png           → Imágenes del carousel
+└── README.md           → Este archivo
 ```
 
 ## Tecnologías utilizadas
 
 - HTML5
+- JavaScript (Fetch API, async/await)
 - Bootstrap 5.3 (CDN)
 - Bootstrap Icons (CDN)
 - CSS3 (estilos propios)
-- Imágenes de ejemplo generadas con [picsum.photos](https://picsum.photos/)
 
 ## Cómo verlo
 
 1. Clonar o descargar este repositorio.
-2. Abrir el archivo `index.html` directamente en el navegador (no requiere
-   servidor ni instalación adicional, ya que Bootstrap se carga desde CDN).
+2. Abrir el archivo `index.html` directamente en un navegador moderno
+   (requiere conexión a internet para consultar la API y los CDN).
 3. Para probar el diseño responsivo, usar las herramientas de desarrollador
    del navegador (F12 → "Toggle device toolbar").
+
+## Sitio publicado (GitHub Pages)
+
+1. En el repositorio: **Settings → Pages**.
+2. En *Source* elegir **Deploy from a branch** → rama `main` → `/ (root)` → **Save**.
+3. La URL publicada queda en `https://<usuario>.github.io/<repositorio>/`.
